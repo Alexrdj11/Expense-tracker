@@ -43,7 +43,7 @@ public class ExpenseService {
         return repo.findByIdAndUserId(id, uid).map(e -> {
             e.setDescription(incoming.getDescription());
             e.setAmount(incoming.getAmount());
-            // keep your existing category/categoryId field as-is
+            e.setCategoryId(incoming.getCategoryId());
             e.setExpenseDate(incoming.getExpenseDate());
             e.setUserId(uid);
             return repo.save(e);

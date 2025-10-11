@@ -32,8 +32,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest req) {
-        return users.authenticate(req.getUsername(), req.getPassword())
-                .map(u -> ResponseEntity.ok(Map.of("token", jwt.generateToken(u.getUsername()))))
-                .orElseGet(() -> ResponseEntity.status(401).body(Map.of("error", "Invalid credentials")));
+        var u = users.authenticate(req.getUsername(), req.getPassword());
+        if (u.isPresent()) {
+            return ResponseEntity.ok(Map.of("token", jwt.generateToken(u.get().getUsername())));
+        }
+        return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
     }
 }

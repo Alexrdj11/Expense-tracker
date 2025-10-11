@@ -6,6 +6,8 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.expensetracker.backend.model.AppUser;
+
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -24,10 +26,10 @@ public class JwtService {
         this.expirationMillis = expSeconds * 1000L;
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String user) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(user)
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + expirationMillis))
                 .signWith(key)
@@ -45,5 +47,10 @@ public class JwtService {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public String generateToken(AppUser user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'generateToken'");
     }
 }

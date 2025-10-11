@@ -32,4 +32,19 @@ public class AppUser {
     public String getPasswordHash() { return passwordHash; }
     public void setUsername(String username) { this.username = username; }
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+
+    public void setFullName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFullName'");
+    }
+
+    public void setProvider(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setProvider'");
+    }
+
+    public void setExternalId(String sub) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setExternalId'");
+    }
 }

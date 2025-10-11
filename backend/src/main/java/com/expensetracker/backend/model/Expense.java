@@ -23,8 +23,9 @@ public class Expense {
     @Positive(message = "Amount must be > 0")
     private BigDecimal amount;
 
-    @NotBlank(message = "Category required")
-    private String category;
+    @NotNull(message = "CategoryId required")
+    @Column("category_id")
+    private Long categoryId;
 
     @NotNull(message = "Expense date required")
     @Column("expense_date")
@@ -39,10 +40,10 @@ public class Expense {
 
     public Expense() {}
 
-    public Expense(String description, BigDecimal amount, String category, LocalDate expenseDate) {
+    public Expense(String description, BigDecimal amount, Long categoryId, LocalDate expenseDate) {
         this.description = description;
         this.amount = amount;
-        this.category = category;
+        this.categoryId = categoryId;
         this.expenseDate = expenseDate;
     }
 
@@ -51,8 +52,8 @@ public class Expense {
     public void setDescription(String description) { this.description = description; }
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public Long getCategoryId() { return categoryId; }
+    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
     public LocalDate getExpenseDate() { return expenseDate; }
     public void setExpenseDate(LocalDate expenseDate) { this.expenseDate = expenseDate; }
     public LocalDateTime getCreatedAt() { return createdAt; }

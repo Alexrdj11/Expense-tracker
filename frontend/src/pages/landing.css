@@ -1,0 +1,176 @@
+/* smooth scroll globally */
+:root, html, body { scroll-behavior: smooth; }
+
+/* ---------- PAGE 1: BW banner ---------- */
+.xp-hero-bw {
+  position: relative;
+  min-height: 100vh;
+  background: #0b0b0b;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.bw-left-lines {
+  position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+  display: grid; gap: 8px;
+}
+.bw-left-lines span {
+  width: 14px; height: 2px; background: #d1d5db; opacity: .45;
+}
+.bw-right-social {
+  position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+  display: grid; gap: 10px; color: #d1d5db; opacity: .5;
+}
+.bw-center { text-align: center; width: 100%; padding: 0 16px; }
+
+.brand-title {
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: clamp(64px, 16vw, 160px);
+  line-height: .92;
+  margin: 0 0 10px;
+  color: #ffffff;
+}
+.brand-sub {
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #e5e7eb;
+  font-size: clamp(12px, 2vw, 16px);
+  opacity: .75;
+}
+
+.scroll-hint {
+  margin-top: 26px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(229,231,235,.35);
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform .25s ease, border-color .25s ease, color .25s ease;
+}
+.scroll-hint:hover { transform: translateY(2px); border-color: #fff; color: #fff; }
+
+/* ---------- PAGE 2: Features (kept) ---------- */
+.xp-wrap {
+  background: radial-gradient(1200px 600px at 75% 10%, rgba(124,58,237,.18), transparent 40%),
+              linear-gradient(180deg, #0b1222 0%, #0a0f1d 100%);
+  color: #e2e8f0;
+}
+
+.xp-features { padding: 56px 16px 24px; }
+.features-head {
+  width: min(1100px, 95%); margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.features-head h2 { margin: 0; font-size: 22px; font-weight: 800; color: #fff; }
+
+.btn-primary {
+  background: linear-gradient(90deg, #7c3aed, #6366f1);
+  color: white; border: 0; padding: 12px 18px; border-radius: 12px; font-weight: 700; cursor: pointer;
+}
+
+.features-grid {
+  width: 100%;                 /* was a fixed width; now follows .container */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.feature {
+  grid-column: span 6;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 16px;
+  padding: 18px 18px 22px;
+  backdrop-filter: blur(6px);
+}
+@media (min-width: 920px) { .feature { grid-column: span 3; } }
+.feature .icon {
+  font-size: 20px; background: rgba(124,58,237,.18); border: 1px solid rgba(124,58,237,.35);
+  width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; margin-bottom: 10px;
+}
+.feature h3 { margin: 0 0 6px; font-size: 18px; font-weight: 700; }
+.feature p { margin: 0; color: #a8b7cd; font-size: 14px; }
+
+/* Footer */
+.xp-footer {
+  width: min(1100px, 95%);
+  margin: 18px auto 36px;
+  color: #90a0b7;
+  font-size: 13px;
+  text-align: center;
+  border-top: 1px solid rgba(148,163,184,.15);
+  padding-top: 14px;
+}
+
+/* Left hover nav */
+.bw-nav {
+  position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+}
+.hamburger {
+  display: grid; gap: 6px; padding: 8px; background: transparent; border: none; cursor: pointer;
+}
+.hamburger span {
+  width: 18px; height: 2px; background: #d1d5db; opacity: .75;
+}
+.hamburger:hover span { opacity: 1; }
+
+.hover-menu {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-8px);
+  background: #0f0f10;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 190px;
+  display: grid; gap: 6px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.bw-nav:hover .hover-menu,
+.bw-nav.open .hover-menu {
+  opacity: 1; pointer-events: auto; transform: translateY(-50%) translateX(0);
+}
+.menu-item {
+  background: transparent; border: 1px solid transparent; color: #e5e7eb;
+  text-align: left; padding: 10px 12px; border-radius: 8px; cursor: pointer;
+}
+.menu-item:hover { background: #151517; color: #ffffff; border-color: rgba(255,255,255,.08); }
+
+/* Shared container to align left edges perfectly */
+.container { width: min(1100px, 92%); margin: 0 auto; }
+
+/* Features header aligns with the same left edge */
+.features-head { display: flex; align-items: center; justify-content: space-between; }
+.features-head h2 { margin: 0; font-size: 22px; font-weight: 800; color: #fff; }
+
+/* Ensure the grid uses the same container width */
+.features-grid {
+  width: 100%;                 /* was a fixed width; now follows .container */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+
+/* Get started callout */
+.get-started { margin-top: 28px; }
+.get-started h3 { margin: 0 0 6px; font-size: 22px; font-weight: 800; color: #fff; }
+.get-started p { margin: 0 0 12px; color: #a8b7cd; }
+
+/* Small toast */
+.toast {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(8px);
+  background: #111318; color: #e5e7eb; border: 1px solid rgba(255,255,255,.12);
+  padding: 10px 14px; border-radius: 10px; box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+  z-index: 1000; font-size: 14px;
+}
+.toast.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
