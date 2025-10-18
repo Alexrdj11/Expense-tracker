@@ -11,6 +11,9 @@ services:
         sync: false
       - key: SPRING_DATASOURCE_PASSWORD
         sync: false
+      # Optional: Provide Aiven CA via base64 for VERIFY_CA
+      - key: MYSQL_SSL_CA_PEM_B64
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: SPRING_SQL_INIT_MODE

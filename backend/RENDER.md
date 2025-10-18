@@ -15,7 +15,9 @@ This project includes a Dockerfile for the backend, so Render can build & run it
 Set these under the service Settings → Environment:
 
 Required (from Aiven):
-- SPRING_DATASOURCE_URL = jdbc:mysql://<HOST>:<PORT>/<DB>?sslMode=REQUIRED&enabledTLSProtocols=TLSv1.2,TLSv1.3
+- SPRING_DATASOURCE_URL =
+	- Option A (simplest): jdbc:mysql://<HOST>:<PORT>/<DB>?sslMode=REQUIRED&enabledTLSProtocols=TLSv1.2,TLSv1.3
+	- Option B (strict CA validation): jdbc:mysql://<HOST>:<PORT>/<DB>?sslMode=VERIFY_CA&sslCa=/app/certs/aiven-mysql-ca.pem&enabledTLSProtocols=TLSv1.2,TLSv1.3
 - SPRING_DATASOURCE_USERNAME = <USER>
 - SPRING_DATASOURCE_PASSWORD = <PASSWORD>
 
@@ -25,8 +27,12 @@ App:
 - CORS_ALLOWED_ORIGINS = https://<your-frontend>.onrender.com
 
 Note on SSL:
-- Using `sslMode=REQUIRED` is simplest on Render (no custom truststore).
-- If you prefer `VERIFY_CA`, you must bake a truststore into the image and set JAVA_TOOL_OPTIONS accordingly.
+- Using `sslMode=REQUIRED` is simplest on Render (no certs to manage).
+- If you prefer `VERIFY_CA`, you can now provide the Aiven CA via env using base64:
+	- Set `MYSQL_SSL_CA_PEM_B64` to the base64 of your Aiven CA PEM
+	- The image startup writes it to `/app/certs/aiven-mysql-ca.pem`
+	- Use `sslCa=/app/certs/aiven-mysql-ca.pem` in your JDBC URL
+	- Do NOT set `JAVA_TOOL_OPTIONS` with a Windows path in Render
 
 ## 4) Ports
 - Render provides the PORT env var. The Dockerfile exposes 8000, and Spring reads server.port from PORT.

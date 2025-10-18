@@ -16,8 +16,9 @@ WORKDIR /app
 # Copy the built jar
 COPY --from=build /app/target/backend-*.jar /app/app.jar
 
-# Copy certificates (Aiven CA) for JDBC sslCa usage in container
-COPY certs /app/certs
+# Copy startup script (writes MYSQL_SSL_CA_PEM to file if present)
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 # The platform (e.g., Vercel) will set PORT; Spring reads server.port from env
 ENV PORT=8000
@@ -26,4 +27,4 @@ EXPOSE 8000
 # Health: print Java version
 RUN java -version
 
-ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["/app/start.sh"]
