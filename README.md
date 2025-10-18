@@ -38,6 +38,33 @@ $env:JWT_SECRET = "change_this_to_a_long_random_secret_32+"
 mvn spring-boot:run
 ```
 
+### Use Aiven MySQL instead of local MySQL
+If you provisioned a managed DB (Aiven) and have host/port/db/user/password plus a CA cert:
+
+Option 1 — Quick (encrypted, no CA validation)
+```powershell
+cd f:\expense_tracker\backend
+$env:SPRING_DATASOURCE_URL="jdbc:mysql://<HOST>:<PORT>/<DBNAME>?sslMode=REQUIRED&enabledTLSProtocols=TLSv1.2,TLSv1.3"
+$env:SPRING_DATASOURCE_USERNAME="<USER>"
+$env:SPRING_DATASOURCE_PASSWORD="<PASSWORD>"
+$env:JWT_SECRET="change_this_to_a_long_random_secret_32_plus"
+mvn spring-boot:run
+```
+
+Option 2 — Secure (VERIFY_CA)
+```powershell
+# Place your CA at backend/certs/aiven-mysql-ca.pem and create a truststore (see backend/certs/README.md)
+cd f:\expense_tracker\backend
+$env:JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=f:\expense_tracker\backend\certs\aiven-mysql-ca.jks -Djavax.net.ssl.trustStorePassword=changeit"
+$env:SPRING_DATASOURCE_URL="jdbc:mysql://<HOST>:<PORT>/<DBNAME>?sslMode=VERIFY_CA&enabledTLSProtocols=TLSv1.2,TLSv1.3"
+$env:SPRING_DATASOURCE_USERNAME="<USER>"
+$env:SPRING_DATASOURCE_PASSWORD="<PASSWORD>"
+$env:JWT_SECRET="change_this_to_a_long_random_secret_32_plus"
+mvn spring-boot:run
+```
+
+Tip: copy `backend/.env.aiven.example` to `backend/.env`, fill values, and run `backend\run.ps1` to auto-load the env.
+
 3) Frontend (port 5173)
 ```powershell
 cd f:\expense_tracker\frontend

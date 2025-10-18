@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local env file (never commit secrets)
+.env
+
+# Other env variants
+.env.*
+
+# Certificates and truststores (do not commit)
+certs/*.pem
+certs/*.crt
+certs/*.cer
+certs/*.jks
+certs/*.p12
+certs/*.pfx

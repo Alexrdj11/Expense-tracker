@@ -1,10 +1,12 @@
 import { JSX, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AppShell from '../components/AppShell'
 import './app.css'
 
 type Result = { imported: number; failed: number; skipped?: number; errors: { line: number; error: string }[] }
 
 export default function Import(): JSX.Element {
+  const navigate = useNavigate()
   const [pdf, setPdf] = useState<File | null>(null)
   const [busy, setBusy] = useState(false)
   const [res, setRes] = useState<Result | null>(null)
@@ -69,6 +71,11 @@ export default function Import(): JSX.Element {
                   ))}
                 </ul>
               )}
+              <div style={{ marginTop: 12, display: 'flex' }}>
+                <button className="btn-primary" onClick={() => navigate('/app')}>
+                  let's goo
+                </button>
+              </div>
             </div>
           )}
           {previewLines && (

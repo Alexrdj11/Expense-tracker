@@ -1,0 +1,14 @@
+# Build context excludes
+.mvn/
+.git/
+.gitignore
+.gitattributes
+node/
+frontend/
+**/target/
+**/.idea/
+**/.vscode/
+**/.DS_Store
+**/run_debug.log
+**/boot_debug.log
+**/error.log
