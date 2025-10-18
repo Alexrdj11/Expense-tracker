@@ -16,6 +16,9 @@ WORKDIR /app
 # Copy the built jar
 COPY --from=build /app/target/backend-*.jar /app/app.jar
 
+# Copy certificates (Aiven CA) for JDBC sslCa usage in container
+COPY certs /app/certs
+
 # The platform (e.g., Vercel) will set PORT; Spring reads server.port from env
 ENV PORT=8000
 EXPOSE 8000
