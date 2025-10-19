@@ -1,6 +1,7 @@
 import { JSX, useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
+import { apiFetch } from '../lib/api'
 import './auth.css'
 
 export default function Register(): JSX.Element {
@@ -74,15 +75,11 @@ export default function Register(): JSX.Element {
     }
     setSubmitting(true)
     try {
-      const res = await fetch('/api/users/register', {
+      await apiFetch<void>('/api/users/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       })
-      const data = await res.json().catch(() => ({} as any))
-      if (!res.ok) {
-        setError(data?.message || data?.error || 'Registration failed')
-      } else {
+      {
         await login(username, password) // auto sign-in
         navigate('/') // <- was '/app'
       }

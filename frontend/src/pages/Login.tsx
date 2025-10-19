@@ -1,6 +1,7 @@
 import { JSX, useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './auth.css'
+import { apiFetch } from '../lib/api'
 
 type LoginResponse = { token?: string; error?: string }
 
@@ -85,13 +86,11 @@ export default function Login(): JSX.Element {
     setError('')
     setSubmitting(true)
     try {
-      const res = await fetch('/api/auth/login', {
+      const data = await apiFetch<LoginResponse>('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       })
-      const data: LoginResponse = await res.json()
-      if (!res.ok || !data.token) {
+      if (!data.token) {
         setError(data.error || 'Invalid credentials')
       } else {
         localStorage.setItem('token', data.token)

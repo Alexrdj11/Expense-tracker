@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from '../lib/api';
 
 type Category = { id: number; name: string };
 
@@ -7,14 +8,7 @@ export default function Home() {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    fetch('/api/categories', {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    })
-      .then(async (r) => {
-        if (!r.ok) throw new Error(await r.text());
-        return r.json();
-      })
+    apiFetch<Category[]>('/api/categories')
       .then(setItems)
       .catch(() => setError('Failed to load categories'));
   }, []);

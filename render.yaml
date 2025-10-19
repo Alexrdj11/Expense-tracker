@@ -19,6 +19,6 @@ services:
       - key: SPRING_SQL_INIT_MODE
         value: always
       - key: CORS_ALLOWED_ORIGINS
-        value: https://your-frontend-on-render.onrender.com
+        value: https://expense-tracker-five-omega-76.vercel.app
     autoDeploy: true
     healthCheckPath: /

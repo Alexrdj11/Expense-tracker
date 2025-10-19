@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { apiFetch } from '../lib/api'
 
 type AuthCtx = {
   token: string | null
@@ -16,13 +17,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    })
-    const data = await res.json()
-    if (!res.ok || !data?.token) throw new Error(data?.error || 'Login failed')
+    const data = await apiFetch<{ token: string }>(
+      '/api/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+      }
+    )
+    if (!data?.token) throw new Error('Login failed')
     localStorage.setItem('token', data.token)
     setToken(data.token)
     return true
